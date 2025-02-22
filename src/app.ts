@@ -3,9 +3,6 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import { config } from 'dotenv';
-import * as https from 'https';
-import * as fs from 'fs';
-import * as path from 'path';
 import authRoutes from './routes/auth';
 import insightsRoutes from './routes/insights';
 import dataDeletionRoutes from './routes/data-deletion';
@@ -16,6 +13,7 @@ config();
 
 const app = express();
 const port = process.env.PORT || 3000;
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 // Middleware
 app.use(helmet());
@@ -35,15 +33,26 @@ app.use('/api', dataDeletionRoutes);
 // Error Handler
 app.use(errorHandler);
 
-// HTTPS Configuration
-const httpsOptions = {
-  key: fs.readFileSync(path.join(__dirname, '../../certificates/localhost+2-key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, '../../certificates/localhost+2.pem'))
-};
+// Start server based on environment
+if (isDevelopment) {
+  // Local development with HTTPS
+  const https = require('https');
+  const fs = require('fs');
+  const path = require('path');
 
-// Create HTTPS server
-https.createServer(httpsOptions, app).listen(port, () => {
-  console.log(`Server is running on https://localhost:${port}`);
-});
+  const httpsOptions = {
+    key: fs.readFileSync(path.join(__dirname, '../certificates/localhost+2-key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, '../certificates/localhost+2.pem'))
+  };
+
+  https.createServer(httpsOptions, app).listen(port, () => {
+    console.log(`Development server running on https://localhost:${port}`);
+  });
+} else {
+  // Production environment (render.com handles HTTPS)
+  app.listen(port, () => {
+    console.log(`Production server running on port ${port}`);
+  });
+}
 
 export default app;

@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon",
     "build": "tsc",
-    "start": "node dist/app.js"
+    "start": "node dist/app.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
   },
   "dependencies": {
     "axios": "^1.6.7",
@@ -15,7 +15,8 @@
     "express-validator": "^7.0.1",
     "helmet": "^7.1.0",
     "http-errors": "^2.0.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
@@ -23,9 +24,6 @@
     "@types/http-errors": "^2.0.4",
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.11.16",
-    "date-fns": "^3.3.1",
-    "nodemon": "^3.0.3",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "ts-node-dev": "^2.0.0"
   }
 }

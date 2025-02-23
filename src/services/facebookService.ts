@@ -116,7 +116,7 @@ export const getPageInsights = async (
           'page_views_total',
           'page_post_engagements'
         ].join(','),
-        period: 'day',
+        period: 'total_over_range',
         since,
         until,
       },

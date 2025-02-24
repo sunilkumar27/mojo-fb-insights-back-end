@@ -17,13 +17,21 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 
 // Middleware
 app.use(helmet());
-app.use(cors({
-  origin: process.env.CLIENT_URL,
+// CORS configuration
+const corsOptions = {
+  origin: [
+    'https://mojo-fb-insights-front-end.vercel.app',
+    'http://localhost:5173',
+    'https://localhost:5173'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
-  optionsSuccessStatus: 200}
-));
+  optionsSuccessStatus: 200
+};
+
+// Middleware
+app.use(cors(corsOptions));
 
 app.use(morgan('dev'));
 app.use(express.json());

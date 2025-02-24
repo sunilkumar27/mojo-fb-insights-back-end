@@ -37,6 +37,8 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.options('*', cors(corsOptions));
+
 // Health check endpoint
 app.get('/', (req, res) => {
   res.json({

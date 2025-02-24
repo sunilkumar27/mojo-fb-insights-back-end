@@ -54,8 +54,8 @@ if (isDevelopment) {
   const path = require('path');
 
   const httpsOptions = {
-    key: fs.readFileSync(path.join(__dirname, '../certificates/localhost+2-key.pem')),
-    cert: fs.readFileSync(path.join(__dirname, '../certificates/localhost+2.pem'))
+    key: fs.readFileSync(path.join(__dirname, '../../certificates/localhost+2-key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, '../../certificates/localhost+2.pem'))
   };
 
   https.createServer(httpsOptions, app).listen(port, () => {

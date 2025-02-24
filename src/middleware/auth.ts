@@ -2,6 +2,10 @@ import { Request, Response, NextFunction } from 'express';
 import createError from 'http-errors';
 import { verifyFacebookToken } from '../services/facebookService';
 
+/**
+ * Middleware for facebook authroization.
+ */
+
 export interface AuthRequest extends Request {
   user?: {
     id: string;

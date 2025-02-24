@@ -1,6 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import { HttpError } from 'http-errors';
 
+/**
+ * Error handler to handle the errors and send the response with proper status.
+ */
+
 export const errorHandler = (
   err: HttpError,
   req: Request,

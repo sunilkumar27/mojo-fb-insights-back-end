@@ -3,6 +3,9 @@ import { authMiddleware, AuthRequest } from '../middleware/auth';
 import { getUserPages, getPageInsights } from '../services/facebookService';
 import { validateDateRange } from '../middleware/validation';
 
+/**
+ * Router definitions for page insights
+ */
 const router = Router();
 
 // Get user's Facebook pages

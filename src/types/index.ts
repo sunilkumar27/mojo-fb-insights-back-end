@@ -1,6 +1,9 @@
 import { Request } from 'express';
 import { AuthRequest } from '../middleware/auth';
 
+/**
+ * Defines the types for facebook page and page insights responses
+ */
 export interface FacebookPage {
   id: string;
   name: string;
@@ -33,46 +36,3 @@ export interface PageInsights {
     love: number;
   };
 }
-
-/*export interface PageOverview {
-  id: string;
-  name: string;
-  fan_count: number;
-  category: string;
-  picture: {
-    data: {
-      url: string;
-    };
-  };
-  engagement: {
-    count: number;
-    social_sentence: string;
-  };
-}
-
-export interface InsightMetric {
-  name: string;
-  period: string;
-  values: Array<{
-    value: number;
-    end_time: string;
-  }>;
-  title: string;
-  description: string;
-}
-
-export interface ValidatedRequest extends AuthRequest {
-  query: {
-    since: string;
-    until: string;
-  };
-}
-
-export interface ApiResponse<T> {
-  success: boolean;
-  data?: T;
-  error?: {
-    message: string;
-    code?: string;
-  };
-}*/

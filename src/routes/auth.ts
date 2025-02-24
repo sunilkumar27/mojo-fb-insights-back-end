@@ -2,6 +2,10 @@ import { Router } from 'express';
 import { verifyFacebookToken } from '../services/facebookService';
 import { AuthRequest } from '../middleware/auth';
 
+
+/**
+ * Router for authorization.
+ */
 const router = Router();
 
 router.post('/verify', async (req: AuthRequest, res, next) => {

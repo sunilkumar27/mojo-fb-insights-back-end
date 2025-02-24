@@ -1,6 +1,9 @@
 import axios from 'axios';
 import createError from 'http-errors';
 
+/**
+ * Service to connect to Facebook API.
+ */
 interface FacebookUserData {
   id: string;
   name: string;

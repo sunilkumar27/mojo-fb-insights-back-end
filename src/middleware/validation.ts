@@ -1,6 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { parse, isValid, isBefore } from 'date-fns';
 
+/**
+ * Date validator to validate date passed.
+ */
 export const validateDateRange = (
   req: Request,
   res: Response,

@@ -1,6 +1,9 @@
 import { Router } from 'express';
 import createError from 'http-errors';
 
+/**
+ * Router for data-deletion.
+ */
 const router = Router();
 
 router.post('/data-deletion', async (req, res, next) => {

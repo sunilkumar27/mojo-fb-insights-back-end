@@ -65,7 +65,7 @@ export const verifyFacebookToken = async (accessToken: string): Promise<Facebook
 export const getUserPages = async (accessToken: string): Promise<FacebookPage[]> => {
   try {
     const response = await axios.get<{ data: FacebookPage[] }>(`${FACEBOOK_BASE_URL}/me/accounts`, {
-      
+
       params: {
         access_token: accessToken,
         fields: 'id,name,access_token,picture,category,fan_count',
@@ -113,41 +113,46 @@ export const getPageInsights = async (
         access_token: pageAccessToken,
         metric: [
           'page_fan_adds',
-          'page_views_total',
-          'page_post_engagements'
+          'page_impressions',
+          'page_post_engagements',
+          'page_actions_post_reactions_like_total',
+          'page_actions_post_reactions_love_total',
+          'page_impressions_unique',
+          'page_impressions_paid'
         ].join(','),
         period: 'total_over_range',
         since,
         until,
       },
     });
+    
 
     const data = insightsResponse.data.data || [];
 
     return {
       followers: pageResponse.data.fan_count || 0,
       engagement: extractMetricValue(data, 'page_post_engagements'),
-      impressions: extractMetricValue(data, 'page_views_total'),
-      reactions: extractMetricValue(data, 'page_fan_adds'),
+      impressions: extractMetricValue(data, 'page_impressions'),
+      reactions: extractMetricValue(data, 'page_actions_post_reactions_like_total'),
       engagementDetails: {
         totalEngagements: extractMetricValue(data, 'page_post_engagements'),
-        postImpressions: extractMetricValue(data, 'page_views_total')
+        postImpressions: extractMetricValue(data, 'page_impressions')
       },
       impressionDetails: {
-        unique: extractMetricValue(data, 'page_fan_adds') - extractMetricValue(data, 'page_fan_removes'),
-        paid: 0,
-        organic: extractMetricValue(data, 'page_views_total')
-      },
+        unique: extractMetricValue(data, 'page_impressions_unique'),
+        paid: extractMetricValue(data, 'page_impressions_paid'),
+        organic: extractMetricValue(data, 'page_impressions') - extractMetricValue(data, 'page_impressions_paid')
+      },      
       reactionDetails: {
-        like: extractMetricValue(data, 'page_fan_adds'),
-        love: 0
+        like: extractMetricValue(data, 'page_actions_post_reactions_like_total'),
+        love: extractMetricValue(data, 'page_actions_post_reactions_love_total')
       }
     };
   } catch (error) {
     console.error('Failed to fetch page insights:', error);
     if (axios.isAxiosError(error)) {
       const fbError = error.response?.data?.error;
-      throw createError(error.response?.status || 500, 
+      throw createError(error.response?.status || 500,
         fbError?.message || 'Failed to fetch page insights');
     }
     throw createError(500, 'Failed to fetch page insights');
